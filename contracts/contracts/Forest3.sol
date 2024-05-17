@@ -28,7 +28,7 @@ contract Forest3 {
     event VoteCast(address indexed groupAddress, address indexed memberAddress, bool vote);
     event FundsDistributed(address indexed groupAddress, address indexed memberAddress, uint256 amount);
 
-    constructor(string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineDays) {
+    constructor(string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineDays) payable {
         i_owner = msg.sender;
         goal = _goal;
         stakeAmount = _stakeAmount;
@@ -57,7 +57,7 @@ contract Forest3 {
         require(block.timestamp > goalDeadline, "Voting has already started");
 //        群组里应该得有这个人才能投票
         require(memberStatus[msg.sender].memberAddress == msg.sender, "Member not recognized");
-
+        require(!memberStatus[msg.sender].hasVoted, "您已投过票");
         votingOpen = true;
         memberStatus[msg.sender].hasVoted = true;
 
