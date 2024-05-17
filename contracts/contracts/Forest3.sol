@@ -77,11 +77,18 @@ contract Forest3 {
             memberStatus[member].votesReceived++;
 
 //            ======================================================
-            // 检查是否有超过一半的成员投票
-            for (uint256 i = 0; i < members.length; i++) {
-                uint256 totalVotes = 0;
+            // 计算完成目标或参与投票的成员数量
+            uint256 eligibleMembersCount = 0;
+            for (uint256 k = 0; k < members.length; k++) {
+                if (memberStatus[members[k]].hasCompletedGoal || memberStatus[members[k]].hasVoted) {
+                    eligibleMembersCount++;
+                }
+            }
+            for (uint256 l = 0; l < members.length; l++) {
                 // 如果投票总数超过成员数的一半，则认为被投票的成员完成了目标
-                memberStatus[members[i]].hasCompletedGoal = memberStatus[members[i]].votesReceived > (members.length / 2);
+                if (memberStatus[members[l]].votesReceived > eligibleMembersCount / 2) {
+                    memberStatus[members[l]].hasCompletedGoal = true;
+                }
             }
         }
         emit VoteCast(address(this), msg.sender, true);
