@@ -23,12 +23,12 @@ contract Forest3 {
 
     mapping(address => Member) public memberStatus;
 
-    event GroupCreated(address indexed groupAddress, address[] members, uint256 goal1, uint256 goal2, uint256 stakeAmount);
+    event GroupCreated(address indexed groupAddress, uint256 goal1, uint256 goal2, uint256 stakeAmount);
     event MemberJoined(address indexed groupAddress, address indexed memberAddress);
     event VoteCast(address indexed groupAddress, address indexed memberAddress, bool vote);
     event FundsDistributed(address indexed groupAddress, address indexed memberAddress, uint256 amount);
 
-    constructor(address[] memory _members, string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineDays) {
+    constructor(string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineDays) {
         i_owner = msg.sender;
         goal = _goal;
         stakeAmount = _stakeAmount;
@@ -36,35 +36,26 @@ contract Forest3 {
         goalDeadline = block.timestamp + _goalDeadlineDays * 1 days; // Set a deadline for the goal, e.g., 1 day from now
         votingOpen = false;
         require(msg.value >= stakeAmount, "Incorrect stake amount");
-        memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, 0);
+        memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, false, 0);
         members.push(msg.sender);
-        for (uint256 i = 0; i < _members.length; i++) {
-            memberStatus[_members[i]] = Member(_members[i], 0, false, false, 0);
-            members.push(_members[i]);
-        }
-        emit GroupCreated(address(this), _members, 0, 0, _stakeAmount);
-    }
-    // 允许成员补交他们的质押金额
-    function stake() public payable {
-        require(msg.value >= stakeAmount, "Incorrect stake amount");
-        Member storage member = memberStatus[msg.sender];
-        require(member.memberAddress == msg.sender, "Member does not exist");
-        member.stakeAmount += msg.value;
+        emit GroupCreated(address(this), 0, 0, _stakeAmount);
     }
 
-    function joinGroup() public external payable {
+    function joinGroup() external payable {
         require(members.length < memberLimit, "MemberLimitError"); // Assuming a max member limit of 10 for this example
-        memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, 0);
+//        需要members里不存在这个人才能加入。也就是不能重复加入
+// TODO Check if the sender is not already a member
+        require(memberStatus[msg.sender].memberAddress == address(0), "Member already exists");
+        require(msg.value >= stakeAmount, "Incorrect stake amount");
+        memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, false, 0);
         members.push(msg.sender);
 
         emit MemberJoined(address(this), msg.sender);
     }
 
     function castVote(address[] calldata _membersWhoCompleted) external {
-//        TODO
-//        require(block.timestamp > goalDeadline && block.timestamp <= goalDeadline + 1 days, "Voting period is closed");
-//        require(block.timestamp > goalDeadline && !votingOpen, "Voting has already started");
         require(block.timestamp > goalDeadline, "Voting has already started");
+//        群组里应该得有这个人才能投票
         require(memberStatus[msg.sender].memberAddress == msg.sender, "Member not recognized");
 
         votingOpen = true;
@@ -83,17 +74,15 @@ contract Forest3 {
             require(isMember, "One or more addresses voted for are not group members");
 
             // 为被投票认为完成目标的成员增加投票计数
-//            if (memberStatus[member].hasVoted || memberStatus[member].hasCompletedGoal) {
-//                continue; // 如果成员已经投票或之前已被标记为完成目标，则跳过
-//            }
             memberStatus[member].votesReceived++;
-        }
 
-        // 检查是否有超过一半的成员投票
-        for (uint256 i = 0; i < members.length; i++) {
-            uint256 totalVotes = 0;
-            // 如果投票总数超过成员数的一半，则认为被投票的成员完成了目标
-            memberStatus[members[i]].hasCompletedGoal = memberStatus[members[i]].votesReceived > (members.length / 2);
+//            ======================================================
+            // 检查是否有超过一半的成员投票
+            for (uint256 i = 0; i < members.length; i++) {
+                uint256 totalVotes = 0;
+                // 如果投票总数超过成员数的一半，则认为被投票的成员完成了目标
+                memberStatus[members[i]].hasCompletedGoal = memberStatus[members[i]].votesReceived > (members.length / 2);
+            }
         }
         emit VoteCast(address(this), msg.sender, true);
     }
@@ -120,7 +109,7 @@ contract Forest3 {
         }
 
         // 计算每个成员可以提取的金额
-        uint256 totalStakedByEligibleMembers = totalStaked  / eligibleMembersCount;
+        uint256 totalStakedByEligibleMembers = totalStaked / eligibleMembersCount;
         memberStatus[msg.sender].hasWithdraw = true;
 
         emit FundsDistributed(address(this), msg.sender, totalStakedByEligibleMembers);
@@ -135,17 +124,4 @@ contract Forest3 {
     function getMemberStatus(address _member) external view returns (Member memory) {
         return memberStatus[_member];
     }
-
-    // Add error handling functions here if needed
-    // function MemberLimitError() internal pure {
-    //     // Error handling logic
-    // }
-
-    // function InvalidVoteError() internal pure {
-    //     // Error handling logic
-    // }
-
-    // function FundsNotDistributedError() internal pure {
-    //     // Error handling logic
-    // }
 }
