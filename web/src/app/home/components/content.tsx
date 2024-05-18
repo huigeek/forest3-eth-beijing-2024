@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, HStack, Text, VStack, useToast } from "@chakra-ui/react";
+import { Box, Text, VStack, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { collectionTableName, getDatabase, isIndexedDBSupported } from "~/util/indexDB";
 import type { Category, Site } from "~/services";

@@ -1,6 +1,5 @@
 /*reset css*/
 @import "@kirklin/reset-css/kirklin.css";
-@unocss all;
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -26,8 +25,8 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+/*@layer utilities {*/
+/*  .text-balance {*/
+/*    text-wrap: balance;*/
+/*  }*/
+/*}*/

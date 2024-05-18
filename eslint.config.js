@@ -4,7 +4,7 @@ export default kirklin({
   rules: {
     "new-cap": "warn",
     "no-console": "warn",
-    "node/prefer-global/process": "warn",
+    "node/prefer-global/process": "off",
     "eslint-comments/no-unlimited-disable": "off",
   },
   formatters: {

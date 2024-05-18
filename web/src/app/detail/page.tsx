@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Box, Heading, Text, Flex, Button, List, ListItem } from '@chakra-ui/react';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Box, Heading, List, ListItem, Text } from "@chakra-ui/react";
+import { Button } from "~/components/ui/button";
 
-const Detail = () => {
-  const [groupAddress, setGroupAddress] = useState('0x1234567890abcdef'); // Replace with actual logic
-  const [members, setMembers] = useState(['0x123...', '0x456...', '0x789...']); // Replace with actual logic
+function Detail() {
+  const [groupAddress, setGroupAddress] = useState("0x1234567890abcdef"); // Replace with actual logic
+  const [members, setMembers] = useState(["0x123...", "0x456...", "0x789..."]); // Replace with actual logic
   const [endTime, setEndTime] = useState(new Date(Date.now() + 3600000)); // Replace with actual logic
-  const [timeRemaining, setTimeRemaining] = useState('');
+  const [timeRemaining, setTimeRemaining] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Detail = () => {
       const distance = endTime.getTime() - now.getTime();
       if (distance < 0) {
         clearInterval(interval);
-        setTimeRemaining('EXPIRED');
+        setTimeRemaining("EXPIRED");
       } else {
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -31,7 +32,7 @@ const Detail = () => {
 
   const handleVote = () => {
     // Handle vote logic here
-    router.push('/vote');
+    router.push("/vote");
   };
 
   return (
@@ -39,19 +40,25 @@ const Detail = () => {
       <Heading as="h2" mb={5} textAlign="center">
         Group Detail
       </Heading>
-      <Text fontSize="lg" mb={3}>Group Address: {groupAddress}</Text>
+      <Text fontSize="lg" mb={3}>
+        Group Address:
+        {groupAddress}
+      </Text>
       <Heading as="h3" mb={3}>Members</Heading>
       <List spacing={2} mb={5}>
-        {members.map((member) => (
+        {members.map(member => (
           <ListItem key={member}>{member}</ListItem>
         ))}
       </List>
-      <Text fontSize="lg" mb={5}>Time Remaining: {timeRemaining}</Text>
-      <Button onClick={handleVote} disabled={timeRemaining === 'EXPIRED'} colorScheme="teal">
+      <Text fontSize="lg" mb={5}>
+        Time Remaining:
+        {timeRemaining}
+      </Text>
+      <Button onClick={handleVote} disabled={timeRemaining === "EXPIRED"}>
         Vote
       </Button>
     </Box>
   );
-};
+}
 
 export default Detail;

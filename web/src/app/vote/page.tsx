@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Box, Heading, Button, Select, CheckboxGroup, Checkbox } from '@chakra-ui/react';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Box, Checkbox, CheckboxGroup, Heading } from "@chakra-ui/react";
+import { Button } from "~/components/ui/button";
 
-const Vote = () => {
+function Vote() {
   const [members, setMembers] = useState<string[]>([]);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [voted, setVoted] = useState(false);
@@ -13,7 +14,7 @@ const Vote = () => {
   useEffect(() => {
     // Fetch the group members from the contract or backend API
     // This is a placeholder; replace with actual logic
-    setMembers(['0x123...', '0x456...', '0x789...']);
+    setMembers(["0x123...", "0x456...", "0x789..."]);
   }, []);
 
   const handleVote = () => {
@@ -32,17 +33,17 @@ const Vote = () => {
         Vote
       </Heading>
       <CheckboxGroup onChange={handleChange}>
-        {members.map((member) => (
+        {members.map(member => (
           <Checkbox key={member} value={member} mb={3}>
             {member}
           </Checkbox>
         ))}
       </CheckboxGroup>
-      <Button onClick={handleVote} disabled={voted} colorScheme="teal" mt={5}>
-        {voted ? 'Wait for settlement' : 'Vote'}
+      <Button onClick={handleVote} disabled={voted} mt={5}>
+        {voted ? "Wait for settlement" : "Vote"}
       </Button>
     </Box>
   );
-};
+}
 
 export default Vote;

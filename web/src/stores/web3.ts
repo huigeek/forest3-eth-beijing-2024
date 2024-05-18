@@ -1,8 +1,8 @@
 import * as ethers from "ethers";
 import { flow, makeAutoObservable } from "mobx";
-import { contractAddress } from "~/util/web3-utils";
-import { ABI } from "~/constants/abi";
+import { useToast } from "~/components/ui/use-toast";
 
+const { toast } = useToast();
 export class Web3Store {
   chainId = "";
   selectedAddress = "";
@@ -31,7 +31,10 @@ export class Web3Store {
     try {
       const eth = window.ethereum;
       if (!eth) {
-        message.warning("Please install metamask to use the website");
+        toast({
+          title: "warning",
+          content: "Please install metamask to use the website",
+        });
         return;
       }
       if (eth.selectedAddress === null) {
@@ -49,7 +52,10 @@ export class Web3Store {
     try {
       const eth = window.ethereum;
       if (!eth) {
-        message.warning("请在网站中安装metamask");
+        toast({
+          title: "warning",
+          content: "Please install metamask to use the website",
+        });
         return;
       }
       yield eth.request({
@@ -58,7 +64,10 @@ export class Web3Store {
       });
       this.chainId = chainId;
     } catch (error) {
-      message.warning("请切换到相应的chainId");
+      toast({
+        title: "warning",
+        content: "Please switch to the appropriate chainId.",
+      });
     }
   });
 }
