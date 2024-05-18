@@ -181,7 +181,7 @@ export const ABI = [
             type: "uint256",
           },
         ],
-        internalType: "struct Forest3.Member",
+        internalType: "struct Forest3Test.Member",
         name: "",
         type: "tuple",
       },
