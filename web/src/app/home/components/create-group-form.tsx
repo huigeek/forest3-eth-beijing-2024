@@ -5,7 +5,6 @@ export default function CreateGroupForm() {
   const { signMessage } = useSignMessage();
   async function handleCreateGroup(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     signMessage({ message: "sign create group" });
   }
 

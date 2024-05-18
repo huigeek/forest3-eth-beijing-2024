@@ -143,7 +143,6 @@ contract Forest3 {
         return memberStatus[_member];
     }
 
-
     function getAllMemberStatus() external view returns (Member[] memory) {
         // 创建一个新的Member数组，大小与成员数量相同
         Member[] memory allMembersStatus = new Member[](members.length);
