@@ -4,11 +4,12 @@ import {
 } from "@rainbow-me/rainbowkit";
 import {
   argentWallet,
-  ledgerWallet,
-  trustWallet,
+  injectedWallet,
+  okxWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import {
   base,
+  hardhat,
   optimism,
   scrollSepolia,
   sepolia,
@@ -22,7 +23,7 @@ export const WagmiConfig = getDefaultConfig({
     ...wallets,
     {
       groupName: "Other",
-      wallets: [argentWallet, trustWallet, ledgerWallet],
+      wallets: [argentWallet, injectedWallet, okxWallet],
     },
   ],
   chains: [
@@ -30,6 +31,7 @@ export const WagmiConfig = getDefaultConfig({
     optimism,
     sepolia,
     base,
+    hardhat,
   ],
   ssr: true,
 });

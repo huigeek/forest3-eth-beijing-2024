@@ -1,32 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Box, Button, Flex, Heading, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useSignMessage } from "wagmi";
+import JoinGroupForm from "~/app/home/components/join-group-form";
+import CreateGroupForm from "~/app/home/components/create-group-form";
 
 function Home() {
-  const { signMessage } = useSignMessage();
   const router = useRouter();
-
-  // const {
-  //   data: hash,
-  //   isPending,
-  //   writeContract,
-  // } = useWriteContract();
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const target = formData.get("target") as string;
-    signMessage({ message: target });
-    // writeContract({
-    //   address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
-    //   abi: ABI,
-    //   functionName: "mint",
-    //   args: [BigInt(tokenId)],
-    // });
-    console.log(target);
-  }
 
   return (
     <Flex minHeight="100vh">
@@ -75,27 +56,10 @@ function Home() {
               </TabList>
               <TabPanels flex="1" display="flex" flexDirection="column">
                 <TabPanel>
-                  <Box
-                    as="form"
-                    onSubmit={(e) => {
-                      e.preventDefault(); router.push("/detail");
-                    }}
-                  >
-                    <Input placeholder="Group Address" mb={4} />
-                    <Button type="submit" colorScheme="teal" size="lg" mt={4}>Join Group</Button>
-                  </Box>
+                  <JoinGroupForm />
                 </TabPanel>
                 <TabPanel>
-                  <Box
-                    as="form"
-                    onSubmit={submit}
-                  >
-                    <Input name="target" placeholder="Target" mb={4} />
-                    <Input placeholder="Money (ETH)" mb={4} />
-                    <Input placeholder="Duration (seconds)" mb={4} />
-                    <Input placeholder="Member Limit" mb={4} />
-                    <Button type="submit" colorScheme="teal" size="lg" mt={4}>Create Group</Button>
-                  </Box>
+                  <CreateGroupForm />
                 </TabPanel>
               </TabPanels>
             </Tabs>
