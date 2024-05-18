@@ -11,14 +11,21 @@ dotenv.config();
 // }
 // const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 const ACCOUNT_PRIVATE_KEY = process.env.ACCOUNT_PRIVATE_KEY || "";
-
+const LOCAL_ACCOUNT_PRIVATE_KEY = process.env.LOCAL_ACCOUNT_PRIVATE_KEY || "";
 const config: HardhatUserConfig = {
   solidity: "0.8.24",
   networks: {
     scrollSepolia: {
       url: "https://sepolia-rpc.scroll.io",
       chainId: 534351,
+      coinbase: "ETH",
       accounts: [ACCOUNT_PRIVATE_KEY],
+    },
+    Sepolia: {
+      url: "https://eth-sepolia-public.unifra.io",
+      chainId: 11155111,
+      coinbase: "ETH",
+      accounts: [LOCAL_ACCOUNT_PRIVATE_KEY],
     },
     // hardhat: {
     // If you want to do some forking, uncomment this
@@ -29,7 +36,7 @@ const config: HardhatUserConfig = {
     // },
     localhost: {
       chainId: 31337,
-      accounts: ["0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a14efcf23656e"],
+      accounts: [LOCAL_ACCOUNT_PRIVATE_KEY],
     },
   },
   gasReporter: {

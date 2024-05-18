@@ -1,48 +1,17 @@
 "use client";
 import {
   RainbowKitProvider,
-  getDefaultConfig,
-  getDefaultWallets,
 } from "@rainbow-me/rainbowkit";
-import {
-  argentWallet,
-  ledgerWallet,
-  trustWallet,
-} from "@rainbow-me/rainbowkit/wallets";
-import {
-  base,
-  optimism,
-  scrollSepolia,
-  sepolia,
-} from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
+import { WagmiConfig } from "~/config/wagmi";
 
-const { wallets } = getDefaultWallets();
-const config = getDefaultConfig({
-  appName: "Forest3",
-  projectId: "YOUR_PROJECT_ID",
-  wallets: [
-    ...wallets,
-    {
-      groupName: "Other",
-      wallets: [argentWallet, trustWallet, ledgerWallet],
-    },
-  ],
-  chains: [
-    scrollSepolia,
-    optimism,
-    sepolia,
-    base,
-  ],
-  ssr: true,
-});
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={WagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>{children}</RainbowKitProvider>
       </QueryClientProvider>

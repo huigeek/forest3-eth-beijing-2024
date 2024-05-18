@@ -12,7 +12,8 @@
     "hardhat:node": "hardhat node",
     "deploy": "hardhat run scripts/deploy.ts",
     "deploy:forest3": "hardhat run scripts/deploy-forest3.ts  --network scrollSepolia",
-    "deploy:forest3:test": "hardhat run scripts/deploy-forest3-test.ts  --network scrollSepolia"
+    "deploy:forest3:test": "hardhat run scripts/deploy-forest3-test.ts  --network scrollSepolia",
+    "deploy:forest3:test:localhost": "hardhat run scripts/deploy-forest3-test.ts  --network localhost"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2"

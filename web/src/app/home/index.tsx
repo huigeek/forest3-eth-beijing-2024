@@ -3,9 +3,31 @@
 import { useRouter } from "next/navigation";
 import { Box, Button, Flex, Heading, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useSignMessage } from "wagmi";
 
 function Home() {
+  const { signMessage } = useSignMessage();
   const router = useRouter();
+
+  // const {
+  //   data: hash,
+  //   isPending,
+  //   writeContract,
+  // } = useWriteContract();
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const target = formData.get("target") as string;
+    signMessage({ message: target });
+    // writeContract({
+    //   address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+    //   abi: ABI,
+    //   functionName: "mint",
+    //   args: [BigInt(tokenId)],
+    // });
+    console.log(target);
+  }
+
   return (
     <Flex minHeight="100vh">
       <Box className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">
@@ -66,11 +88,9 @@ function Home() {
                 <TabPanel>
                   <Box
                     as="form"
-                    onSubmit={(e) => {
-                      e.preventDefault(); router.push("/detail");
-                    }}
+                    onSubmit={submit}
                   >
-                    <Input placeholder="Target" mb={4} />
+                    <Input name="target" placeholder="Target" mb={4} />
                     <Input placeholder="Money (ETH)" mb={4} />
                     <Input placeholder="Duration (seconds)" mb={4} />
                     <Input placeholder="Member Limit" mb={4} />
