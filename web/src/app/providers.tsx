@@ -10,12 +10,10 @@ import {
   trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import {
-  arbitrum,
   base,
-  mainnet,
   optimism,
-  polygon,
   sepolia,
+    scrollSepolia
 } from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -33,12 +31,10 @@ const config = getDefaultConfig({
     },
   ],
   chains: [
-    mainnet,
-    polygon,
+    scrollSepolia,
     optimism,
-    arbitrum,
+    sepolia,
     base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
   ],
   ssr: true,
 });

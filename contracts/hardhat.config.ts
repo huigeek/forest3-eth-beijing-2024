@@ -15,10 +15,11 @@ const ACCOUNT_PRIVATE_KEY = process.env.ACCOUNT_PRIVATE_KEY || "";
 const config: HardhatUserConfig = {
   solidity: "0.8.24",
   networks: {
-    // scrollAlpha: {
-    //   url: "https://alpha-rpc.scroll.io/l2",
-    //   accounts: [ACCOUNT_PRIVATE_KEY],
-    // },
+    scrollSepolia: {
+      url: "https://sepolia-rpc.scroll.io",
+      chainId: 534351,
+      accounts: [ACCOUNT_PRIVATE_KEY],
+    },
     // hardhat: {
     // If you want to do some forking, uncomment this
     // forking: {

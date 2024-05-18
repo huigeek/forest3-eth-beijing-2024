@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Forest3 {
+contract Forest3Test {
     struct Member {
         address memberAddress;
 //        已经质押的钱
@@ -53,7 +53,7 @@ contract Forest3 {
 
     // 辅助函数，用于计算开启投票后的截止时间
     function getSettlementDeadline() internal view returns (uint256) {
-        return goalDeadline + 1 days;
+        return goalDeadline + 5 * 60 seconds;
     }
 
     function castVote(address[] calldata _membersWhoCompleted) external {

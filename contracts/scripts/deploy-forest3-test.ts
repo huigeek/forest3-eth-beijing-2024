@@ -7,14 +7,14 @@ async function sleep(ts: number) {
 }
 
 async function main() {
-  const Forest3 = await hardhat.ethers.getContractFactory("Forest3");
+  const Forest3 = await hardhat.ethers.getContractFactory("Forest3Test");
   const forest3 = await Forest3.deploy(
     "Goal Description", // _goal
-    1000, // _stakeAmount, 假设质押金额为100单位
+    100, // _stakeAmount, 假设质押金额为100单位
     10, // _memberLimit, 假设成员限制为10
-    3600, // _goalDeadlineSeconds, 假设目标截止时间为10分钟（600秒）
+    600, // _goalDeadlineSeconds, 假设目标截止时间为10分钟（600秒）
     {
-      value: 1002,
+      value: 102,
     },
   );
   await forest3.waitForDeployment();
@@ -26,7 +26,7 @@ async function main() {
   await hardhat.run("verify", {
     address: CONTRACT_ADDRESS,
     constructorArgsParams: [],
-    contract: "contracts/Forest3.sol:Forest3",
+    contract: "contracts/Forest3Test.sol:Forest3Test",
   });
 }
 
