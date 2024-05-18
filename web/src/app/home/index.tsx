@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ethers } from "ethers";
-import { Box, Button, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Button, Flex, Heading, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function Home() {
@@ -47,36 +46,53 @@ function Home() {
           </blockquote>
         </div>
       </Box>
-      <Flex flex="1" direction="column" justifyContent="center" alignItems="center" height="100vh">
-        <Box position="absolute" top="10" right="10">
+      <Flex flex="1" direction="column" height="100vh">
+        <Box height="80px" display="flex" justifyContent="flex-end" alignItems="center" p={4}>
           <ConnectButton />
         </Box>
-        <Box className="p-4 lg:p-8 h-full flex items-center justify-center flex-col">
-          <Heading as="h1" size="2xl" mb={6} textAlign="center">
-            Join or Create a Group
-          </Heading>
-          <Text fontSize="xl" mb={8} textAlign="center">
-            Collaborate with others to achieve your goals. Start by joining an existing group or creating your own.
-          </Text>
-          <Tabs variant="soft-rounded" colorScheme="teal" align="center" width="100%">
-            <TabList mb="1em">
-              <Tab>Join Group</Tab>
-              <Tab>Create Group</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Link href="/join">
-                  <Button colorScheme="teal" size="lg">Join Group</Button>
-                </Link>
-              </TabPanel>
-              <TabPanel>
-                <Link href="/create">
-                  <Button colorScheme="teal" size="lg">Create Group</Button>
-                </Link>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
+        <Flex direction="column" flex="1" p={10} justifyContent="center" alignItems="center">
+          <Box className="p-4 lg:p-8 h-full flex items-center justify-center flex-col">
+            <Heading as="h1" size="2xl" mb={6} textAlign="center">
+              Join or Create a Group
+            </Heading>
+            <Text fontSize="xl" mb={8} textAlign="center">
+              Collaborate with others to achieve your goals. Start by joining an existing group or creating your own.
+            </Text>
+            <Tabs variant="soft-rounded" colorScheme="teal" align="center" width="100%" flex="1" display="flex" flexDirection="column">
+              <TabList mb="1em">
+                <Tab>Join Group</Tab>
+                <Tab>Create Group</Tab>
+              </TabList>
+              <TabPanels flex="1" display="flex" flexDirection="column">
+                <TabPanel>
+                  <Box
+                    as="form"
+                    onSubmit={(e) => {
+                      e.preventDefault(); router.push("/detail");
+                    }}
+                  >
+                    <Input placeholder="Group Address" mb={4} />
+                    <Button type="submit" colorScheme="teal" size="lg" mt={4}>Join Group</Button>
+                  </Box>
+                </TabPanel>
+                <TabPanel>
+                  <Box
+                    as="form"
+                    onSubmit={(e) => {
+                      e.preventDefault(); router.push("/detail");
+                    }}
+                  >
+                    <Input placeholder="Target" mb={4} />
+                    <Input placeholder="Money (ETH)" mb={4} />
+                    <Input placeholder="Duration (seconds)" mb={4} />
+                    <Input placeholder="Member Limit" mb={4} />
+                    <Button type="submit" colorScheme="teal" size="lg" mt={4}>Create Group</Button>
+                  </Box>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Box>
+        </Flex>
       </Flex>
     </Flex>
   );
