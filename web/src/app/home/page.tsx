@@ -55,7 +55,7 @@ function Home() {
       </Box>
       <Flex flex="1" direction="column" height="100vh">
         <Box height="80px" display="flex" justifyContent="flex-end" alignItems="center" p={4}>
-          <ConnectButton />
+          {/*<ConnectButton />*/}
         </Box>
         <Flex direction="column" flex="1" p={10} justifyContent="center" alignItems="center">
           <Box className="p-4 lg:p-8 h-full flex items-center justify-center flex-col">

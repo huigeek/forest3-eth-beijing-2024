@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Web3Providers } from "./web3Providers";
+import Header from "~/components/layout/header";
 import Providers from "~/components/layout/providers";
 import Analytics from "~/components/Analytics";
 import "./globals.css";
@@ -37,8 +38,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <Web3Providers>
           <Providers>
-            <div id="app">
-              {children}
+            <div className="flex h-screen overflow-hidden">
+              <Header />
+              <main className="w-full pt-16">
+                {children}
+              </main>
             </div>
           </Providers>
         </Web3Providers>

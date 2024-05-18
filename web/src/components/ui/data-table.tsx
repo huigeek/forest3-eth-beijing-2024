@@ -10,8 +10,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "./input";
+import { Button } from "./button";
 import { ScrollArea, ScrollBar } from "./scroll-area";
 import {
   Table,
