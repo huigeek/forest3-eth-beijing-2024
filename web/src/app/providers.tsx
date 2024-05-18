@@ -12,8 +12,8 @@ import {
 import {
   base,
   optimism,
+  scrollSepolia,
   sepolia,
-    scrollSepolia
 } from "wagmi/chains";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
