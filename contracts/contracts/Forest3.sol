@@ -57,7 +57,7 @@ contract Forest3 {
         require(block.timestamp > goalDeadline, "Voting has already started");
 //        群组里应该得有这个人才能投票
         require(memberStatus[msg.sender].memberAddress == msg.sender, "Member not recognized");
-        require(!memberStatus[msg.sender].hasVoted, "您已投过票");
+        require(!memberStatus[msg.sender].hasVoted, "You have already voted");
         votingOpen = true;
         memberStatus[msg.sender].hasVoted = true;
 
