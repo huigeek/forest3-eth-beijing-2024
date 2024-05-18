@@ -42,15 +42,16 @@ function Awards() {
     return (
       <div>
         Error:
-        {error.message}
+        {error?.cause.shortMessage}
       </div>
     );
   }
+
   if (writeError) {
     return (
       <div>
         Error:
-        {writeError.message}
+        {writeError?.cause.shortMessage}
       </div>
     );
   }

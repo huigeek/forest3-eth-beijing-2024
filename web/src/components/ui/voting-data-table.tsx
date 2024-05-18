@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table";
 
 import { useWriteContract } from "wagmi";
+import type { WriteContractErrorType } from "viem";
 import { Input } from "./input";
 import { Button } from "./button";
 import { ScrollArea, ScrollBar } from "./scroll-area";
@@ -55,8 +56,8 @@ export function DataTable<TData, TValue>({
       args: [addresses],
     });
   };
-  if (writeError){
-    console.log(writeError)
+  if (writeError as WriteContractErrorType) {
+    console.log(writeError?.cause.shortMessage);
   }
   /* this can be used to get the selectedrows
   console.log("value", table.getFilteredSelectedRowModel()); */
