@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
-import { Providers } from "./providers";
+import { Web3Providers } from "./web3Providers";
+import Providers from "~/components/layout/providers";
 import Analytics from "~/components/Analytics";
 import "./globals.css";
 import "./App.css";
@@ -9,7 +9,6 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
   title: "Forest3 专注森林",
   description: "Forest3 专注森林是一个基于区块链技术的去中心化应用（DApp），旨在通过经济激励和社区支持帮助用户提升自律，实现个人目标。",
@@ -36,11 +35,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <div id="app">
-            {children}
-          </div>
-        </Providers>
+        <Web3Providers>
+          <Providers>
+            <div id="app">
+              {children}
+            </div>
+          </Providers>
+        </Web3Providers>
         <Analytics />
       </body>
     </html>

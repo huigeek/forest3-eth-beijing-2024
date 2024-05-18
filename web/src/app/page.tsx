@@ -1,11 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import Page from "./home";
+import Home from "./home/page";
 
 function Index() {
   return (
     <>
       <ChakraProvider>
-        <Page />
+        <Home />
       </ChakraProvider>
     </>
   );
