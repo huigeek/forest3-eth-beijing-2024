@@ -1,10 +1,25 @@
 "use client";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { User } from "./types";
+import type { Voter } from "./types";
+import { Checkbox } from "~/components/ui/checkbox";
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Voter>[] = [
   {
     id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={value => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
     enableSorting: false,
     enableHiding: false,
   },
