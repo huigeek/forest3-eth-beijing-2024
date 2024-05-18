@@ -104,7 +104,7 @@ contract Forest3 {
 
         Member storage member = memberStatus[msg.sender];
 //        结算的时候如果用户没完成目标或者没参与投票的不能取钱
-        require(member.hasCompletedGoal || member.hasVoted, "FundsNotDistributedError");
+        require(member.hasCompletedGoal && member.hasVoted, "FundsNotDistributedError");
 
         // 计算完成目标或参与投票的成员数量
         uint256 eligibleMembersCount = 0;

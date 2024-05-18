@@ -2,18 +2,34 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Box, Button, ChakraProvider, Checkbox, CheckboxGroup, Flex, Heading } from "@chakra-ui/react";
+import { useAccount, useReadContract } from "wagmi";
+import { CONTRACTS_ADDRESS } from "~/constants";
+import { ABI } from "~/constants/abi";
 
 function Vote() {
-  const [members, setMembers] = useState<string[]>([]);
+  const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [voted, setVoted] = useState(false);
   const router = useRouter();
 
+  const account = useAccount();
+  const {
+    data: memberList,
+    error,
+    isPending,
+  } = useReadContract({
+    address: CONTRACTS_ADDRESS,
+    abi: ABI,
+    functionName: "getAllMemberStatus",
+    args: [],
+  });
+
   useEffect(() => {
-    // Fetch the group members from the contract or backend API
-    // This is a placeholder; replace with actual logic
-    setMembers(["0x123...", "0x456...", "0x789..."]);
-  }, []);
+    if (!isPending && memberList) {
+      setMembers(memberList);
+      console.log(memberList);
+    }
+  }, [memberList]);
 
   const handleVote = () => {
     // Handle vote logic here
@@ -35,8 +51,8 @@ function Vote() {
           <Box textAlign="left">
             <CheckboxGroup onChange={handleChange} mb={5}>
               {members.map(member => (
-                <Checkbox key={member} value={member} mb={3}>
-                  {member}
+                <Checkbox key={member?.memberAddress} value={member?.memberAddress} mb={3}>
+                  {member?.memberAddress}
                 </Checkbox>
               ))}
             </CheckboxGroup>
