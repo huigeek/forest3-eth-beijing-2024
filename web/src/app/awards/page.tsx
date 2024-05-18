@@ -42,7 +42,7 @@ function Awards() {
     return (
       <div>
         Error:
-        {error?.cause.shortMessage}
+        {error?.cause?.shortMessage}
       </div>
     );
   }
@@ -51,7 +51,7 @@ function Awards() {
     return (
       <div>
         Error:
-        {writeError?.cause.shortMessage}
+        {writeError?.cause?.shortMessage}
       </div>
     );
   }
