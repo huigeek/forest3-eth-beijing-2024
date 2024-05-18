@@ -8,18 +8,26 @@ async function sleep(ts: number) {
 
 async function main() {
   const Forest3 = await hardhat.ethers.getContractFactory("Forest3");
-  const Forest3 = await Forest3.deploy();
-  await Forest3.waitForDeployment();
-  const CONTRACT_ADDRESS = await Forest3.getAddress();
+  const forest3 = await Forest3.deploy(
+    "Goal Description", // _goal
+    100, // _stakeAmount, 假设质押金额为100单位
+    10, // _memberLimit, 假设成员限制为10
+    600, // _goalDeadlineSeconds, 假设目标截止时间为10分钟（600秒）
+    {
+      value: 102,
+    },
+  );
+  await forest3.waitForDeployment();
+  const CONTRACT_ADDRESS = await forest3.getAddress();
   console.log(`Forest3 contract deployed to ${CONTRACT_ADDRESS}`);
 
   await sleep(5000);
 
-  await hardhat.run("verify", {
-    address: CONTRACT_ADDRESS,
-    constructorArgsParams: [],
-    contract: "contracts/Forest3.sol:Forest3",
-  });
+  // await hardhat.run("verify", {
+  //   address: CONTRACT_ADDRESS,
+  //   constructorArgsParams: [],
+  //   contract: "contracts/Forest3.sol:Forest3",
+  // });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

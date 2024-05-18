@@ -28,12 +28,12 @@ contract Forest3 {
     event VoteCast(address indexed groupAddress, address indexed memberAddress, bool vote);
     event FundsDistributed(address indexed groupAddress, address indexed memberAddress, uint256 amount);
 
-    constructor(string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineDays) payable {
+    constructor(string memory _goal, uint256 _stakeAmount, uint256 _memberLimit, uint256 _goalDeadlineSeconds) payable {
         i_owner = msg.sender;
         goal = _goal;
         stakeAmount = _stakeAmount;
         memberLimit = _memberLimit;
-        goalDeadline = block.timestamp + _goalDeadlineDays * 1 days; // Set a deadline for the goal, e.g., 1 day from now
+        goalDeadline = block.timestamp + _goalDeadlineSeconds * 1 seconds; // Set a deadline for the goal, e.g., 1 day from now
         votingOpen = false;
         require(msg.value >= stakeAmount, "Incorrect stake amount");
         memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, false, 0);
@@ -54,7 +54,7 @@ contract Forest3 {
     }
 
     function castVote(address[] calldata _membersWhoCompleted) external {
-        require(block.timestamp > goalDeadline, "Voting has already started");
+        require(block.timestamp > goalDeadline, "voting not start yet");
 //        群组里应该得有这个人才能投票
         require(memberStatus[msg.sender].memberAddress == msg.sender, "Member not recognized");
         require(!memberStatus[msg.sender].hasVoted, "You have already voted");
@@ -97,7 +97,7 @@ contract Forest3 {
     function withdraw() external {
         require(votingOpen, "Voting not open");
 //        1天后才算结算完成，才能取钱。
-        require(block.timestamp <= goalDeadline + 1 days, "Voting not completed");
+        require(block.timestamp >= goalDeadline + 1 days, "Voting not completed");
         // 确保成员没有提取过资金
         require(!memberStatus[msg.sender].hasWithdraw, "Funds already withdrawn");
 
