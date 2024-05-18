@@ -18,7 +18,7 @@ export const ABI = [
       },
       {
         internalType: "uint256",
-        name: "_goalDeadlineDays",
+        name: "_goalDeadlineSeconds",
         type: "uint256",
       },
     ],
@@ -319,19 +319,6 @@ export const ABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "votingOpen",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
       },
     ],
     stateMutability: "view",

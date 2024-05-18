@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ethers } from 'ethers';
-import { Box, Button, Flex, Heading, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import Link from 'next/link';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import SettingGoals from '~/app/home/components/setting-goals';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ethers } from "ethers";
+import { Box, Button, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import Link from "next/link";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-const Home = () => {
+function Home() {
   const router = useRouter();
   const [account, setAccount] = useState<string | null>(null);
 
   const connectWallet = async () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const accounts = await provider.send('eth_requestAccounts', []);
+      const accounts = await provider.send("eth_requestAccounts", []);
       setAccount(accounts[0]);
     }
   };
@@ -81,6 +80,6 @@ const Home = () => {
       </Flex>
     </Flex>
   );
-};
+}
 
 export default Home;
