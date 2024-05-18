@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Heading, List, ListItem, Text } from "@chakra-ui/react";
-import { Button } from "~/components/ui/button";
+import { Box, Button, Flex, Heading, List, ListItem, Text } from "@chakra-ui/react";
 
 function Detail() {
   const [groupAddress, setGroupAddress] = useState("0x1234567890abcdef"); // Replace with actual logic
@@ -36,28 +35,32 @@ function Detail() {
   };
 
   return (
-    <Box p={5}>
+    <Flex direction="column" alignItems="center" justifyContent="flex-start" minHeight="100vh" p={5}>
       <Heading as="h2" mb={5} textAlign="center">
         Group Detail
       </Heading>
-      <Text fontSize="lg" mb={3}>
-        Group Address:
-        {groupAddress}
-      </Text>
-      <Heading as="h3" mb={3}>Members</Heading>
-      <List spacing={2} mb={5}>
-        {members.map(member => (
-          <ListItem key={member}>{member}</ListItem>
-        ))}
-      </List>
-      <Text fontSize="lg" mb={5}>
-        Time Remaining:
-        {timeRemaining}
-      </Text>
-      <Button onClick={handleVote} disabled={timeRemaining === "EXPIRED"}>
-        Vote
-      </Button>
-    </Box>
+      <Box width="100%" maxWidth="600px">
+        <Box textAlign="left">
+          <Text fontSize="lg" mb={3}>
+            Group Address:
+            {groupAddress}
+          </Text>
+          <Heading as="h3" mb={3}>Members</Heading>
+          <List spacing={2} mb={5}>
+            {members.map(member => (
+              <ListItem key={member}>{member}</ListItem>
+            ))}
+          </List>
+          <Text fontSize="lg" mb={5}>
+            Time Remaining:
+            {timeRemaining}
+          </Text>
+          <Button onClick={handleVote} disabled={timeRemaining === "EXPIRED"} colorScheme="teal">
+            Vote
+          </Button>
+        </Box>
+      </Box>
+    </Flex>
   );
 }
 

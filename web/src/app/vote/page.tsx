@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Checkbox, CheckboxGroup, Heading } from "@chakra-ui/react";
-import { Button } from "~/components/ui/button";
+import { Box, Button, Checkbox, CheckboxGroup, Flex, Heading } from "@chakra-ui/react";
 
 function Vote() {
   const [members, setMembers] = useState<string[]>([]);
@@ -28,21 +27,25 @@ function Vote() {
   };
 
   return (
-    <Box p={5}>
+    <Flex direction="column" alignItems="center" justifyContent="flex-start" minHeight="100vh" p={5}>
       <Heading as="h2" mb={5} textAlign="center">
         Vote
       </Heading>
-      <CheckboxGroup onChange={handleChange}>
-        {members.map(member => (
-          <Checkbox key={member} value={member} mb={3}>
-            {member}
-          </Checkbox>
-        ))}
-      </CheckboxGroup>
-      <Button onClick={handleVote} disabled={voted} mt={5}>
-        {voted ? "Wait for settlement" : "Vote"}
-      </Button>
-    </Box>
+      <Box width="100%" maxWidth="600px">
+        <Box textAlign="left">
+          <CheckboxGroup onChange={handleChange} mb={5}>
+            {members.map(member => (
+              <Checkbox key={member} value={member} mb={3}>
+                {member}
+              </Checkbox>
+            ))}
+          </CheckboxGroup>
+          <Button onClick={handleVote} disabled={voted} colorScheme="teal" display="block" mx="auto">
+            {voted ? "Wait for settlement" : "Vote"}
+          </Button>
+        </Box>
+      </Box>
+    </Flex>
   );
 }
 

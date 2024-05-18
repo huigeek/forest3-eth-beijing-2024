@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Flex, Heading, Input } from "@chakra-ui/react";
-import { Button } from "~/components/ui/button";
+import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 
 function Create() {
   const [target, setTarget] = useState("");
   const [money, setMoney] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [duration, setDuration] = useState("");
+  const [memberLimit, setMemberLimit] = useState("");
   const router = useRouter();
 
   const handleSubmit = () => {
@@ -23,30 +23,58 @@ function Create() {
         Create Task Group
       </Heading>
       <Flex direction="column" alignItems="center">
-        <Input
-          placeholder="Task Target"
-          value={target}
-          onChange={e => setTarget(e.target.value)}
-          mb={3}
-          width="300px"
-        />
-        <Input
-          placeholder="Set Money (ETH)"
-          value={money}
-          onChange={e => setMoney(e.target.value)}
-          type="number"
-          mb={3}
-          width="300px"
-        />
-        <Input
-          placeholder="Set End Time"
-          value={endTime}
-          onChange={e => setEndTime(e.target.value)}
-          type="datetime-local"
-          mb={5}
-          width="300px"
-        />
-        <Button onClick={handleSubmit}>
+        <FormControl mb={3} width="300px">
+          <FormLabel>Task Target</FormLabel>
+          <Input
+            placeholder="Task Target"
+            value={target}
+            onChange={e => setTarget(e.target.value)}
+          />
+        </FormControl>
+        <FormControl mb={3} width="300px">
+          <FormLabel>Set Money (ETH)</FormLabel>
+          <NumberInput
+            value={money}
+            onChange={valueString => setMoney(valueString)}
+            min={0}
+            precision={2}
+          >
+            <NumberInputField placeholder="Set Money (ETH)" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl mb={3} width="300px">
+          <FormLabel>Set Duration (seconds)</FormLabel>
+          <NumberInput
+            value={duration}
+            onChange={valueString => setDuration(valueString)}
+            min={0}
+          >
+            <NumberInputField placeholder="Set Duration (seconds)" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <FormControl mb={5} width="300px">
+          <FormLabel>Set Member Limit</FormLabel>
+          <NumberInput
+            value={memberLimit}
+            onChange={valueString => setMemberLimit(valueString)}
+            min={1}
+          >
+            <NumberInputField placeholder="Set Member Limit" />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        </FormControl>
+        <Button onClick={handleSubmit} colorScheme="teal">
           Submit
         </Button>
       </Flex>
