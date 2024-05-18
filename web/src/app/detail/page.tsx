@@ -3,31 +3,35 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Box, Button, ChakraProvider, Flex, Heading, List, ListItem, Text } from "@chakra-ui/react";
+import { useAccount, useReadContract } from "wagmi";
+import { CONTRACTS_ADDRESS } from "~/constants";
+import { ABI } from "~/constants/abi";
 
 function Detail() {
-  const [groupAddress, setGroupAddress] = useState("0x1234567890abcdef"); // Replace with actual logic
-  const [members, setMembers] = useState(["0x123...", "0x456...", "0x789..."]); // Replace with actual logic
-  const [endTime, setEndTime] = useState(new Date(Date.now() + 3600000)); // Replace with actual logic
+  const [groupAddress, setGroupAddress] = useState(CONTRACTS_ADDRESS);
+  const [members, setMembers] = useState([]);
+  const [endTime, setEndTime] = useState(new Date(Date.now() + 3600000));
   const [timeRemaining, setTimeRemaining] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const distance = endTime.getTime() - now.getTime();
-      if (distance < 0) {
-        clearInterval(interval);
-        setTimeRemaining("EXPIRED");
-      } else {
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
-      }
-    }, 1000);
+  const account = useAccount();
+  const {
+    data: memberList,
+    error,
+    isPending,
+  } = useReadContract({
+    address: CONTRACTS_ADDRESS,
+    abi: ABI,
+    functionName: "getAllMemberStatus",
+    args: [],
+  });
 
-    return () => clearInterval(interval);
-  }, [endTime]);
+  useEffect(() => {
+    if (!isPending && memberList) {
+      setMembers(memberList);
+      console.log(memberList);
+    }
+  }, [memberList]);
 
   const handleVote = () => {
     // Handle vote logic here
@@ -49,8 +53,8 @@ function Detail() {
             </Text>
             <Heading as="h3" mb={3}>Members</Heading>
             <List spacing={2} mb={5}>
-              {members.map(member => (
-                <ListItem key={member}>{member}</ListItem>
+              {members?.map(member => (
+                <ListItem key={member?.memberAddress}>{member?.memberAddress}</ListItem>
               ))}
             </List>
             <Text fontSize="lg" mb={5}>

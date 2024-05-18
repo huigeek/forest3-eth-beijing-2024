@@ -129,7 +129,35 @@ contract Forest3 {
         require(success, "Transfer failed");
     }
 
+    function checkMember(address _address) external view returns (bool) {
+        // 遍历成员数组
+        for (uint256 i = 0; i < members.length; i++) {
+            if (members[i] == _address) {
+                return true; // 如果找到地址，返回true
+            }
+        }
+        return false; // 如果没有找到地址，返回false
+    }
+
     function getMemberStatus(address _member) external view returns (Member memory) {
         return memberStatus[_member];
+    }
+
+
+    function getAllMemberStatus() external view returns (Member[] memory) {
+        // 创建一个新的Member数组，大小与成员数量相同
+        Member[] memory allMembersStatus = new Member[](members.length);
+        // 遍历成员数组
+        for (uint256 i = 0; i < members.length; i++) {
+            // 使用成员地址作为索引从memberStatus映射中获取成员状态，并存储到数组中
+            allMembersStatus[i] = memberStatus[members[i]];
+        }
+        // 返回包含所有成员状态的数组
+        return allMembersStatus;
+    }
+
+    function getAllMembers() external view returns (address[] memory) {
+        // 直接返回成员地址数组
+        return members;
     }
 }

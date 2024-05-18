@@ -3,12 +3,28 @@
 import { useRouter } from "next/navigation";
 import { Box, Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useReadContract } from "wagmi";
 import JoinGroupForm from "~/app/home/components/join-group-form";
 import CreateGroupForm from "~/app/home/components/create-group-form";
+import { CONTRACTS_ADDRESS } from "~/constants";
+import { ABI } from "~/constants/abi";
 
 function Home() {
   const router = useRouter();
-
+  const account = useAccount();
+  const {
+    data: isMember,
+    error,
+    isPending,
+  } = useReadContract({
+    address: CONTRACTS_ADDRESS,
+    abi: ABI,
+    functionName: "checkMember",
+    args: [account.address],
+  });
+  if (isMember) {
+    router.push("/detail");
+  }
   return (
     <Flex minHeight="100vh">
       <Box className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">

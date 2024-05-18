@@ -142,6 +142,83 @@ export const ABI = [
     inputs: [
       {
         internalType: "address",
+        name: "_address",
+        type: "address",
+      },
+    ],
+    name: "checkMember",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getAllMemberStatus",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "memberAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "stakeAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "hasVoted",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "hasCompletedGoal",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "hasWithdraw",
+            type: "bool",
+          },
+          {
+            internalType: "uint256",
+            name: "votesReceived",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Forest3Test.Member[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getAllMembers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "_member",
         type: "address",
       },
