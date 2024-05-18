@@ -11,7 +11,7 @@
     "test": "hardhat test",
     "hardhat:node": "hardhat node",
     "deploy": "hardhat run scripts/deploy.ts",
-    "deploy:forest3": "hardhat run scripts/deploy-forest3.ts"
+    "deploy:forest3": "hardhat run scripts/deploy-forest3.ts  --network localhost"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2"
