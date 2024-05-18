@@ -1,12 +1,28 @@
-"use client";
+'use client';
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import SettingGoals from "~/app/home/components/setting-goals";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ethers } from 'ethers';
+import { Box, Button, Flex, Heading, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import Link from 'next/link';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import SettingGoals from '~/app/home/components/setting-goals';
 
-function Home() {
+const Home = () => {
+  const router = useRouter();
+  const [account, setAccount] = useState<string | null>(null);
+
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const accounts = await provider.send('eth_requestAccounts', []);
+      setAccount(accounts[0]);
+    }
+  };
+
   return (
-    <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+    <Flex minHeight="100vh">
+      <Box className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">
         <div className="absolute inset-0 bg-zinc-900" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           <svg
@@ -31,28 +47,40 @@ function Home() {
             <footer className="text-sm">Kirk Lin</footer>
           </blockquote>
         </div>
-      </div>
-      <div>
-        <ConnectButton />
-      </div>
-      <div className="p-4 lg:p-8 h-full flex items-center">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Join or Create a Group
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Collaborate with others to achieve your goals. Start by joining an existing group or creating your own.
-            </p>
-          </div>
-
-          <SettingGoals />
-          <p className="px-8 text-center text-sm text-muted-foreground">
-          </p>
-        </div>
-      </div>
-    </div>
+      </Box>
+      <Flex flex="1" direction="column" justifyContent="center" alignItems="center" height="100vh">
+        <Box position="absolute" top="10" right="10">
+          <ConnectButton />
+        </Box>
+        <Box className="p-4 lg:p-8 h-full flex items-center justify-center flex-col">
+          <Heading as="h1" size="2xl" mb={6} textAlign="center">
+            Join or Create a Group
+          </Heading>
+          <Text fontSize="xl" mb={8} textAlign="center">
+            Collaborate with others to achieve your goals. Start by joining an existing group or creating your own.
+          </Text>
+          <Tabs variant="soft-rounded" colorScheme="teal" align="center" width="100%">
+            <TabList mb="1em">
+              <Tab>Join Group</Tab>
+              <Tab>Create Group</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Link href="/join">
+                  <Button colorScheme="teal" size="lg">Join Group</Button>
+                </Link>
+              </TabPanel>
+              <TabPanel>
+                <Link href="/create">
+                  <Button colorScheme="teal" size="lg">Create Group</Button>
+                </Link>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
+      </Flex>
+    </Flex>
   );
-}
+};
 
 export default Home;
