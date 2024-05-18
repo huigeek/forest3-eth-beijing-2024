@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ethers } from 'ethers';
-import { Button } from '@chakra-ui/react'; // Assuming you are using Chakra UI for styling
+import { Button, Box, Heading, Text, Flex } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Home = () => {
@@ -19,26 +19,32 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <header style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
-        <div>
-          <img src="/logo.png" alt="Logo" style={{ height: '40px' }} />
-        </div>
-        <div>
-          <Button onClick={connectWallet}>
-            {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Connect Wallet'}
-          </Button>
-        </div>
-      </header>
-      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
-        <Link href="/join">
-          <Button style={{ margin: '10px' }}>Join</Button>
-        </Link>
+    <Box p={5}>
+      <Flex justifyContent="space-between" alignItems="center" mb={10}>
+        <img src="/logo.png" alt="Logo" style={{ height: '40px' }} />
+        <Button onClick={connectWallet}>
+          {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Connect Wallet'}
+        </Button>
+      </Flex>
+      <Heading as="h1" mb={5} textAlign="center">
+        Welcome to Forest3
+      </Heading>
+      <Text fontSize="xl" mb={10} textAlign="center">
+        A decentralized task management platform
+      </Text>
+      <Flex justifyContent="center">
         <Link href="/create">
-          <Button style={{ margin: '10px' }}>Create</Button>
+          <Button colorScheme="teal" size="lg" m={3}>
+            Create Group
+          </Button>
         </Link>
-      </main>
-    </div>
+        <Link href="/join">
+          <Button colorScheme="teal" size="lg" m={3}>
+            Join Group
+          </Button>
+        </Link>
+      </Flex>
+    </Box>
   );
 };
 

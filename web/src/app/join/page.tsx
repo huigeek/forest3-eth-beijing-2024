@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Input } from '@chakra-ui/react';
+import { Button, Input, Box, Heading, Flex } from '@chakra-ui/react';
 
 const Join = () => {
   const [groupAddress, setGroupAddress] = useState('');
@@ -15,17 +15,23 @@ const Join = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Join Task Group</h2>
-      <Input
-        placeholder="Group Address"
-        value={groupAddress}
-        onChange={(e) => setGroupAddress(e.target.value)}
-      />
-      <Button onClick={handleJoin} style={{ marginTop: '20px' }}>
-        Join Group
-      </Button>
-    </div>
+    <Box p={5}>
+      <Heading as="h2" mb={5} textAlign="center">
+        Join Task Group
+      </Heading>
+      <Flex direction="column" alignItems="center">
+        <Input
+          placeholder="Group Address"
+          value={groupAddress}
+          onChange={(e) => setGroupAddress(e.target.value)}
+          mb={5}
+          width="300px"
+        />
+        <Button onClick={handleJoin} colorScheme="teal">
+          Join Group
+        </Button>
+      </Flex>
+    </Box>
   );
 };
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Select, Box } from '@chakra-ui/react';
+import { Box, Heading, Button, Select, CheckboxGroup, Checkbox } from '@chakra-ui/react';
 
 const Vote = () => {
   const [members, setMembers] = useState<string[]>([]);
@@ -22,33 +22,26 @@ const Vote = () => {
     setVoted(true);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const options = event.target.options;
-    const selected: string[] = [];
-    for (let i = 0, len = options.length; i < len; i++) {
-      if (options[i].selected) {
-        selected.push(options[i].value);
-      }
-    }
-    setSelectedMembers(selected);
+  const handleChange = (value: string[]) => {
+    setSelectedMembers(value);
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Vote</h2>
-      <Box mb={4}>
-        <Select multiple placeholder="Select members to vote for" onChange={handleChange}>
-          {members.map((member) => (
-            <option key={member} value={member}>
-              {member}
-            </option>
-          ))}
-        </Select>
-      </Box>
-      <Button onClick={handleVote} disabled={voted}>
+    <Box p={5}>
+      <Heading as="h2" mb={5} textAlign="center">
+        Vote
+      </Heading>
+      <CheckboxGroup onChange={handleChange}>
+        {members.map((member) => (
+          <Checkbox key={member} value={member} mb={3}>
+            {member}
+          </Checkbox>
+        ))}
+      </CheckboxGroup>
+      <Button onClick={handleVote} disabled={voted} colorScheme="teal" mt={5}>
         {voted ? 'Wait for settlement' : 'Vote'}
       </Button>
-    </div>
+    </Box>
   );
 };
 

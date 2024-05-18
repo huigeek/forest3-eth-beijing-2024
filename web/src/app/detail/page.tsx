@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@chakra-ui/react';
+import { Box, Heading, Text, Flex, Button, List, ListItem } from '@chakra-ui/react';
 
 const Detail = () => {
   const [groupAddress, setGroupAddress] = useState('0x1234567890abcdef'); // Replace with actual logic
@@ -35,18 +35,22 @@ const Detail = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Group Detail</h2>
-      <p>Group Address: {groupAddress}</p>
-      <h3>Members</h3>
-      <ul>
+    <Box p={5}>
+      <Heading as="h2" mb={5} textAlign="center">
+        Group Detail
+      </Heading>
+      <Text fontSize="lg" mb={3}>Group Address: {groupAddress}</Text>
+      <Heading as="h3" mb={3}>Members</Heading>
+      <List spacing={2} mb={5}>
         {members.map((member) => (
-          <li key={member}>{member}</li>
+          <ListItem key={member}>{member}</ListItem>
         ))}
-      </ul>
-      <h3>Time Remaining: {timeRemaining}</h3>
-      <Button onClick={handleVote} disabled={timeRemaining === 'EXPIRED'}>Vote</Button>
-    </div>
+      </List>
+      <Text fontSize="lg" mb={5}>Time Remaining: {timeRemaining}</Text>
+      <Button onClick={handleVote} disabled={timeRemaining === 'EXPIRED'} colorScheme="teal">
+        Vote
+      </Button>
+    </Box>
   );
 };
 
