@@ -31,8 +31,8 @@ const Home = () => {
         </div>
       </header>
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
-        <Link href="/add">
-          <Button style={{ margin: '10px' }}>Add</Button>
+        <Link href="/join">
+          <Button style={{ margin: '10px' }}>Join</Button>
         </Link>
         <Link href="/create">
           <Button style={{ margin: '10px' }}>Create</Button>
