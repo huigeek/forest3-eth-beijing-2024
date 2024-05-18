@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import Analytics from "~/components/Analytics";
 import "./globals.css";
 import "./App.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

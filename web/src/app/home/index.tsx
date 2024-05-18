@@ -1,5 +1,6 @@
 "use client";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import SettingGoals from "~/app/home/components/setting-goals";
 
 function Home() {
@@ -31,6 +32,9 @@ function Home() {
           </blockquote>
         </div>
       </div>
+      <div>
+        <ConnectButton />
+      </div>
       <div className="p-4 lg:p-8 h-full flex items-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
@@ -41,6 +45,7 @@ function Home() {
               Collaborate with others to achieve your goals. Start by joining an existing group or creating your own.
             </p>
           </div>
+
           <SettingGoals />
           <p className="px-8 text-center text-sm text-muted-foreground">
           </p>
