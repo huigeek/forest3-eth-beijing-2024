@@ -18,7 +18,6 @@ contract Forest3 {
     uint256 public stakeAmount;
     uint256 public goalDeadline;
     uint256 public memberLimit;
-    bool public votingOpen;
     address public immutable i_owner;
 
     mapping(address => Member) public memberStatus;
@@ -34,7 +33,6 @@ contract Forest3 {
         stakeAmount = _stakeAmount;
         memberLimit = _memberLimit;
         goalDeadline = block.timestamp + _goalDeadlineSeconds * 1 seconds; // Set a deadline for the goal, e.g., 1 day from now
-        votingOpen = false;
         require(msg.value >= stakeAmount, "Incorrect stake amount");
         memberStatus[msg.sender] = Member(msg.sender, msg.value, false, false, false, 0);
         members.push(msg.sender);
@@ -53,12 +51,16 @@ contract Forest3 {
         emit MemberJoined(address(this), msg.sender);
     }
 
+    // 辅助函数，用于计算开启投票后的截止时间
+    function getSettlementDeadline() internal view returns (uint256) {
+        return goalDeadline + 5 * 60 seconds;
+    }
+
     function castVote(address[] calldata _membersWhoCompleted) external {
-        require(block.timestamp > goalDeadline, "voting not start yet");
+        require(block.timestamp > goalDeadline && block.timestamp < getSettlementDeadline(), "voting not start yet");
 //        群组里应该得有这个人才能投票
         require(memberStatus[msg.sender].memberAddress == msg.sender, "Member not recognized");
         require(!memberStatus[msg.sender].hasVoted, "You have already voted");
-        votingOpen = true;
         memberStatus[msg.sender].hasVoted = true;
 
         for (uint256 i = 0; i < _membersWhoCompleted.length; i++) {
@@ -95,9 +97,8 @@ contract Forest3 {
     }
 
     function withdraw() external {
-        require(votingOpen, "Voting not open");
 //        1天后才算结算完成，才能取钱。
-        require(block.timestamp >= goalDeadline + 1 days, "Voting not completed");
+        require(block.timestamp > getSettlementDeadline(), "Voting not completed");
         // 确保成员没有提取过资金
         require(!memberStatus[msg.sender].hasWithdraw, "Funds already withdrawn");
 
