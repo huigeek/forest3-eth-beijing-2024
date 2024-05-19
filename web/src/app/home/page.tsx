@@ -28,9 +28,10 @@ function Home() {
     <Flex minHeight="100vh">
       <Box className="relative hidden h-full flex-col bg-[#d4f2c3] p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">
         <div className="absolute inset-0 bg-green-900" />
+        <img className="absolute inset-0 w-full h-full" src="/banner.png" />
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
-            <p className="text-lg">
+            <p className="text-lg font-bold">
               &ldquo;Forest3 Focused Forest is a decentralized application (DApp) based on blockchain technology designed to help users improve self-discipline and achieve personal goals through financial incentives and community support.&rdquo;
             </p>
             <footer className="text-sm">Kirk Lin</footer>
