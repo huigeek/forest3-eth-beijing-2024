@@ -1,11 +1,13 @@
 import { useWriteContract } from "wagmi";
 import { Box, Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { parseEther } from "viem";
 import { ABI } from "~/constants/abi";
 
 export default function JoinGroupForm() {
   const [groupAddress, setGroupAddress] = useState("");
+  const router = useRouter();
   const {
     isPending,
     writeContractAsync,
@@ -22,6 +24,9 @@ export default function JoinGroupForm() {
       args: [],
       value: parseEther("0.01"),
     });
+
+    // 异步操作完成后进行跳转操作，例如跳转到详情页面
+    router.push("/detail");
   }
 
   return (
