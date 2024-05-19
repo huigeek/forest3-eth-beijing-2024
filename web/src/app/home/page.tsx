@@ -26,8 +26,8 @@ function Home() {
   }
   return (
     <Flex minHeight="100vh">
-      <Box className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">
-        <div className="absolute inset-0 bg-zinc-900" />
+      <Box className="relative hidden h-full flex-col bg-[#d4f2c3] p-10 text-white dark:border-r lg:flex" flex="1" height="100vh">
+        <div className="absolute inset-0 bg-green-900" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +43,7 @@ function Home() {
           </svg>
           Logo
         </div>
+        <img src="/banner.png" c/>
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
